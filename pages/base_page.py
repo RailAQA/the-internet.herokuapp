@@ -1,27 +1,34 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import (NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException, TimeoutException)
+import requests
+import allure
+
 
 
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    def open(self, url):
-        """
-        Открытие страницы {url}
-        """
-        return self.driver.get(url)
+    with allure.step(f'Запуск бразуера и открытие страницы'):
+        def open(self, url):
+            """
+            Открытие страницы {url}
+            :param url: Проверяемая страница
+            """
+            return self.driver.get(url)
         
     def find(self, args):
         """
         Поиск элемента по локатору {args}
+        :param args: Локатор искаемого элемента
         """
         self.driver.find_element(*args)
 
     def click_to(self, args):
         """
         Клик по элементу с локатором {*args}
+        :param args: Локатор элемента, на который кликаем
         """
         try:
             self.click_to(args)
@@ -30,11 +37,17 @@ class BasePage:
             raise AssertionError(f'элемент с локатором {args} не найден')
         
     def scroll_to(self, args):
+        """
+        Сколл к элементу
+        :param args: Локатор элемента, к которому скроллимся
+        """
         self.driver.execute_script("return arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});", args)
 
     def wait_element_will_visible(self, timeout: int, args):
         """
         Явное ожидание пока элемент с локатором {args} станет видимым в течение {timeout}
+        :param timeout: Время ожидания
+        :param args: Локатор элемента, который ожидаем
         """
         try:
             return WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(args))
@@ -46,6 +59,8 @@ class BasePage:
     def wait_element_will_invisible(self, timeout: int, args):
         """
         Явное ожидание пока элемент с локатором {args} станет невидимым в течение {timeout}
+        :param timeout: Время ожидания
+        :param args: Локатор элемента, который ожидаем
         """
         try:
             return WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located(args))
@@ -57,6 +72,8 @@ class BasePage:
     def wait_element_will_clickable(self, timeout: int, args):
         """
         Явное ожидание пока элемент с локатором {args} станет кликабельным в течение {timeout}
+        :param timeout: Время ожидания
+        :param args: Локатор элемента, который ожидаем
         """
         try:
             return WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(args))
@@ -68,6 +85,8 @@ class BasePage:
     def wait_element_will_not_clickable(self, timeout: int, args):
         """
         Явное ожидание пока элемент с локатором {args} станет НЕкликабельным в течение {timeout}
+        :param timeout: Время ожидания
+        :param args: Локатор элемента, который ожидаем
         """
         try:
             return WebDriverWait(self.driver, timeout).until_not(EC.element_to_be_clickable(args))
@@ -75,4 +94,19 @@ class BasePage:
             raise AssertionError(f'элемент с локатором {args} не стал HEкликабельным в течение {timeout}')
         except TimeoutException:
             raise AssertionError(f'элемент с локатором {args} не стал HEкликабельным в течение {timeout}')
-
+        
+    def is_page_loaded(self, url, timeout=10):
+        """
+        для смоук тестов - открывается ли страница.
+        :param url: Проверяемая страница
+        :param timeout: Время за которое настроено ожидание
+        """
+        try:
+            actual_status_code = requests.get(url)
+            WebDriverWait(self.driver, timeout).until(
+            lambda driver: driver.execute_script("return document.readyState") == "complete")
+            print(f'Страница {url} успешно загружена')
+            return True
+        except TimeoutException:
+            print(f'Страница {url} не загрузилась за {timeout} секунд. Фактический статус-код = {actual_status_code}')
+            return False
