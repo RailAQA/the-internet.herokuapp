@@ -20,7 +20,7 @@ class TestAbTestingPage:
 
         @allure.title('Проверка открытия страницы A/B Testing')
         @allure.description('Страница A/B Testing должна открываться и полностью загружаться')
-        def test_is_home_page_opened(self, driver):
+        def test_is_ab_testing_page_opened(self, driver):
             a_b_testing = AbTestingPage(driver)
             a_b_testing.open(URL.A_B_TESTING_PAGE)
             assert a_b_testing.is_page_loaded(URL.A_B_TESTING_PAGE)
