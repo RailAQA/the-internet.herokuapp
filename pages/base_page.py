@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utils.logging import *
 from selenium.common.exceptions import (NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException, TimeoutException)
 import requests
 import allure
@@ -33,10 +34,10 @@ class BasePage:
         :param args: Локатор элемента, на который кликаем
         """
         try:
-            self.click_to(args)
             self.driver.find_element(*args).click()
         except NoSuchElementException:
-            raise AssertionError(f'элемент с локатором {args} не найден')
+            logger.error(f'элемент с локатором {args} не кликабельный')
+            raise AssertionError(f'элемент с локатором {args} не кликабельный')
 
     @allure.step('Скролл до нужного элемента на странице')  
     def scroll_to(self, args):
@@ -72,6 +73,7 @@ class BasePage:
         except TimeoutError:
             raise AssertionError(f'элемент с локатором {args} не исчез в течение {timeout}')
         except TimeoutException:
+            logger.error(f'элемент с локатором {args} не исчез в течение {timeout}')
             raise AssertionError(f'элемент с локатором {args} не исчез в течение {timeout}')
 
     @allure.step('Ожидание пока элемент станет кликабельным')
@@ -84,8 +86,10 @@ class BasePage:
         try:
             return WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(args))
         except TimeoutError:
+            logger.error(f'элемент с локатором {args} не стал кликабельным в течение {timeout}')
             raise AssertionError(f'элемент с локатором {args} не стал кликабельным в течение {timeout}')
         except TimeoutException:
+            logger.error(f'элемент с локатором {args} не исчез в течение {timeout}')
             raise AssertionError(f'элемент с локатором {args} не стал кликабельным в течение {timeout}')
 
     @allure.step('Ожидание пока элемент станет НЕкликабельным')   
@@ -98,8 +102,10 @@ class BasePage:
         try:
             return WebDriverWait(self.driver, timeout).until_not(EC.element_to_be_clickable(args))
         except TimeoutError:
+            logger.error(f'элемент с локатором {args} не стал HEкликабельным в течение {timeout}')
             raise AssertionError(f'элемент с локатором {args} не стал HEкликабельным в течение {timeout}')
         except TimeoutException:
+            logger.error(f'элемент с локатором {args} не стал HEкликабельным в течение {timeout}')
             raise AssertionError(f'элемент с локатором {args} не стал HEкликабельным в течение {timeout}')
         
     @allure.step('Проверка открывается ли страница')
@@ -113,8 +119,8 @@ class BasePage:
             actual_status_code = requests.get(url)
             WebDriverWait(self.driver, timeout).until(
             lambda driver: driver.execute_script("return document.readyState") == "complete")
-            print(f'Страница {url} успешно загружена')
+            logger.info(f'Страница {url} успешно загружена')
             return True
         except TimeoutException:
-            print(f'Страница {url} не загрузилась за {timeout} секунд. Фактический статус-код = {actual_status_code}')
+            logger.critical(f'Страница {url} не загрузилась за {timeout} секунд. Фактический статус-код = {actual_status_code}')
             return False
