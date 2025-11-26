@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.add_remove_elements_page import AddRemoveElementsPage
 import allure
 

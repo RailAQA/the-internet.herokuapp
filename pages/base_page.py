@@ -27,6 +27,9 @@ class BasePage:
         """
         self.driver.find_element(*args)
 
+    def current_url(self):
+        return self.driver.current_url
+
     @allure.step('Клик по элементу')
     def click_to(self, args):
         """

@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.dropdown_page import DropdownPage
 import allure
 

@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.dynamic_controls_page import DynamicControlsPage
 import allure
 

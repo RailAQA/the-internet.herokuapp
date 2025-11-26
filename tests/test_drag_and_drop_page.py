@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.drag_and_drop_page import DragAndDropPage
 import allure
 

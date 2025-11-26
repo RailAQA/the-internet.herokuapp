@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.disappearing_elements_page import DisappearingElementsPage
 import allure
 

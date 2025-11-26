@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.ab_testing_page import AbTestingPage
 import allure
 

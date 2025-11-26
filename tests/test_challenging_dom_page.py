@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.challenging_dom_page import ChallengingDomPage
 import allure
 

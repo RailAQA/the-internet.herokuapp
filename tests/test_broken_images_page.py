@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.broken_images_page import BrokenImagesPage
 import allure
 

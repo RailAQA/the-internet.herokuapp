@@ -1,5 +1,5 @@
 import pytest
-from urls.links import URL
+from config.links import URL
 from pages.digest_authentication_page import DigestAuthenticationPage
 import allure
 
