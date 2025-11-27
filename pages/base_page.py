@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.logging import *
+from config.settings import settings
 from selenium.common.exceptions import (NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException, TimeoutException)
 import requests
 import allure
@@ -120,8 +121,14 @@ class BasePage:
         """
         try:
             actual_status_code = requests.get(url)
-            WebDriverWait(self.driver, timeout).until(
-            lambda driver: driver.execute_script("return document.readyState") == "complete")
+            if 'auth' in url:
+                if settings.BROWSER.lower() == 'chrome':
+                    WebDriverWait(self.driver, 10).until(lambda driver: driver.execute_script("return document.readyState") == "complete")
+                else:
+                    WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+            else:
+                WebDriverWait(self.driver, 10).until(
+                lambda driver: driver.execute_script("return document.readyState") == "complete")
             logger.info(f'Страница {url} успешно загружена')
             return True
         except TimeoutException:

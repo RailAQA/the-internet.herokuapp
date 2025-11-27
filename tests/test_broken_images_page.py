@@ -22,4 +22,4 @@ class TestBrokenImagesPage:
         def test_is_broken_images_page_opened(self, driver):
             broken_images_page = BrokenImagesPage(driver)
             broken_images_page.open(URL.BROKEN_IMAGES)
-            assert broken_images_page.is_page_loaded(URL.BASIC_AUTH)
+            assert broken_images_page.is_page_loaded(URL.BROKEN_IMAGES)

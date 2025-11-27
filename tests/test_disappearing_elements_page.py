@@ -22,4 +22,4 @@ class TestDisappearingElementsPage:
         def test_is_disappearing_elements_page_opened(self, driver):
             disappearing_elements_page = DisappearingElementsPage(driver)
             disappearing_elements_page.open(URL.DISAPPEARING_ELEMENTS)
-            assert disappearing_elements_page.is_page_loaded(URL.DIGEST_AUTHENTICATION)
+            assert disappearing_elements_page.is_page_loaded(URL.DISAPPEARING_ELEMENTS)
