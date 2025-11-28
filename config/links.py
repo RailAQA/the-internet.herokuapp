@@ -15,34 +15,22 @@ class URL:
     DROPDOWN = settings.BASE_URL + '/dropdown'
     DYNAMIC_CONTENT = settings.BASE_URL + '/dynamic_content'
     DYNAMIC_CONTROLS = settings.BASE_URL + '/dynamic_controls'
-    DYNAMIC_LOADING = settings.BASE_URL + '/dynamic_loading'
     ENTRY_AD = settings.BASE_URL + '/entry_ad'
-    EXIT_INTENT = settings.BASE_URL + '/exit_intent'
-    FILE_DOWNLOAD = settings.BASE_URL + '/download'
-    FILE_UPLOAD = settings.BASE_URL + '/upload'
-    FLOATING_MENU = settings.BASE_URL + '/floating_menu'
-    FORGOT_PASSWORD = settings.BASE_URL + '/forgot_password'
-    FORM_AUTHENTICATION = settings.BASE_URL + '/login'
-    FRAMES = settings.BASE_URL + '/frames'
-    GEOLOCATION = settings.BASE_URL + '/geolocation'
-    HORIZONTAL_SLIDER = settings.BASE_URL + '/horizontal_slider'
-    HOVERS = settings.BASE_URL + '/hovers'
-    INFINITE_SCROLL = settings.BASE_URL + '/infinite_scroll'
-    INPUTS = settings.BASE_URL + '/inputs'
-    JQUERY_UI_MENUS = settings.BASE_URL + '/jqueryui/menu'
-    JAVASCRIPT_ALERTS = settings.BASE_URL + '/javascript_alerts'
-    JAVASCRIPT_ONLOAD_EVENT_ERROR = settings.BASE_URL + '/javascript_error'
-    KEY_PRESSES = settings.BASE_URL + '/key_presses'
-    LARGE_DEEP_DOM = settings.BASE_URL + '/large'
-    MULTIPLE_WINDOWS = settings.BASE_URL + '/windows'
-    NESTED_FRAMES = settings.BASE_URL + '/nested_frames'
-    NOTIFICATION_MESSAGES = settings.BASE_URL + '/notification_message'
-    REDIRECT_LINK = settings.BASE_URL + '/redirector'
-    SECURE_FILE_DOWNLOAD = settings.BASE_URL + '/download_secure'
-    SHADOW_DOM = settings.BASE_URL + '/shadowdom'
-    SHIFTING_CONTENT = settings.BASE_URL + '/shifting_content'
-    SLOW_RESOURCES = settings.BASE_URL + '/slow'
-    SORTABLE_DATA_TABLES = settings.BASE_URL + '/tables'
-    STATUS_CODES = settings.BASE_URL + '/status_codes'
-    TYPOS = settings.BASE_URL + '/typos'
-    WYSIWYG_EDITOR = settings.BASE_URL + '/tinymce'
+    
+    EXPECTED_URLS = [
+    settings.BASE_URL + '/abtest',
+    settings.BASE_URL + '/add_remove_elements/',
+    settings.BASE_URL + '/basic_auth',
+    settings.BASE_URL + '/broken_images',
+    settings.BASE_URL + '/challenging_dom',
+    settings.BASE_URL + '/checkboxes',
+    settings.BASE_URL + '/context_menu',
+    settings.BASE_URL + '/digest_auth',
+    settings.BASE_URL + '/disappearing_elements',
+    settings.BASE_URL + '/drag_and_drop',
+    settings.BASE_URL + '/dropdown',
+    settings.BASE_URL + '/dynamic_content',
+    settings.BASE_URL + '/dynamic_controls',
+    settings.BASE_URL + '/dynamic_loading',
+    settings.BASE_URL + '/entry_ad'
+]

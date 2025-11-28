@@ -2,6 +2,7 @@ from pages.home_page import HomePage
 from config.settings import settings
 from config.links import URL
 from locators.home_page_locators import HomePageLocators
+from config.settings import settings
 import pytest
 import allure
 
@@ -33,14 +34,17 @@ class TestHomePage:
         """
         Регрессионные тесты для страницы HomePage
         """
+        @pytest.mark.regression_links_home_page
         @allure.severity(allure.severity_level.CRITICAL)
+        @allure.feature('Модуль links в HomePage')
         class TestRegressionLinksModule:
 
-            @allure.feature('Модуль links в HomePage')
-            @pytest.mark.regression_links_home_page
-            @allure.title('Проверка по клику на линк A/B Testing открывается страница с ссылкой /abtest')
-            def test_click_to_ab_testing(self, driver):
+            
+            @pytest.mark.parametrize('link_index, expected_url', list(enumerate(URL.EXPECTED_URLS))[:15])
+            def test_click_to_links_home_page(self, driver, link_index, expected_url):
+                if 'auth' in expected_url and settings.BROWSER == 'firefox':
+                    pytest.skip(f"Пропуск auth страницы в Firefox: {expected_url}")
                 home_page = HomePage(driver)
                 home_page.open(settings.BASE_URL)
-                home_page.click_to_ab_testing_link()
-                assert home_page.current_url() == URL.A_B_TESTING_PAGE
+                home_page.click_to_link_by_index(link_index, expected_url)  # ← передаем индекс
+                assert home_page.current_url() == expected_url

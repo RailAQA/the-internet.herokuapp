@@ -1,8 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from utils.logging import *
 from config.settings import settings
-from selenium.common.exceptions import (NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException, TimeoutException)
+from selenium.common.exceptions import (NoSuchElementException, NoAlertPresentException, TimeoutException)
 import requests
 import allure
 
@@ -26,7 +27,15 @@ class BasePage:
         Поиск элемента по локатору {args}
         :param args: Локатор искаемого элемента
         """
-        self.driver.find_element(*args)
+        return self.driver.find_element(*args)
+
+    @allure.step('Поиск элементов по локатору')
+    def finds(self, args):
+        """
+        Поиск элемента по локатору {args}
+        :param args: Локатор элементов
+        """
+        return self.driver.find_elements(*args)
 
     def current_url(self):
         return self.driver.current_url
@@ -38,7 +47,21 @@ class BasePage:
         :param args: Локатор элемента, на который кликаем
         """
         try:
-            self.driver.find_element(*args).click()
+            self.driver.find_element(args).click()
+        except NoSuchElementException:
+            logger.error(f'элемент с локатором {args} не кликабельный')
+            raise AssertionError(f'элемент с локатором {args} не кликабельный')
+        
+    @allure.step('Клик по элементам')
+    def clicks_to(self, args):
+        """
+        Клик по элементу с локатором {*args}
+        :param args: Локатор элемента, на который кликаем
+        """
+        try:
+            elements = self.finds(args)
+            for i in range(len(elements)):
+                elements[i].click()
         except NoSuchElementException:
             logger.error(f'элемент с локатором {args} не кликабельный')
             raise AssertionError(f'элемент с локатором {args} не кликабельный')
@@ -134,3 +157,36 @@ class BasePage:
         except TimeoutException:
             logger.critical(f'Страница {url} не загрузилась за {timeout} секунд. Фактический статус-код = {actual_status_code}')
             return False
+        
+    def is_alert_present(self):
+        try:
+            self.driver.switch_to.alert
+            logger.info('Аллерт есть на странице')
+            return True
+        except NoAlertPresentException:
+            #ogger.critical('Аллерт не найден')
+            return False
+            
+
+    @allure.step('Переключиться на алерт')
+    @property
+    def switch_to_alert_and(self):
+        alert = self.driver.switch_to.alert
+        return alert
+    
+    @allure.step('Передать значение в инпут аллерта')
+    def send_text_to_input_in_alert(self, value: str):
+        #self.switch_to_alert_and.send_keys(value)
+        self.driver.switch_to.alert.send_keys(value)
+
+    @allure.step('Переключиться на следующий инпут в аллерте')
+    def switch_to_next_input_in_alert(self):
+        self.send_text_to_input_in_alert(Keys.TAB)
+
+    @allure.step('Подтвердить аллерт')
+    def alert_accept(self):
+        self.switch_to_alert_and.accept()
+
+    @allure.step('Скиппнуть аллерт')
+    def alert_close(self):
+        self.driver.switch_to.alert.dismiss()

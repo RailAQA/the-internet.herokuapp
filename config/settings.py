@@ -22,4 +22,8 @@ class Settings:
     #Настройки тестов
     COUNT_RESTARTS = int(os.getenv('RETRY_COUNT', '2'))  # Повторные попытки при падении. По умолчанию 2 попытки.
 
+    #Логин и пароль
+    USER_LOGIN = 'admin'
+    USER_PASSWORD = USER_LOGIN
+
 settings = Settings()
