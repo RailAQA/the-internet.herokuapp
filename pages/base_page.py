@@ -47,7 +47,7 @@ class BasePage:
         :param args: Локатор элемента, на который кликаем
         """
         try:
-            self.driver.find_element(args).click()
+            self.driver.find_element(*args).click()
         except NoSuchElementException:
             logger.error(f'элемент с локатором {args} не кликабельный')
             raise AssertionError(f'элемент с локатором {args} не кликабельный')
