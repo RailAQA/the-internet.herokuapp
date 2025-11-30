@@ -59,3 +59,11 @@ class TestAddRemoveElementsPage:
                 count_click_to_delete_button = add_remove_elements_page.count_deleted_delete_buttons()
                 actual_count_delete_buttons = add_remove_elements_page.actual_count_delete_buttons()
                 assert actual_count_delete_buttons == count_clicks_to_add_buttons - count_click_to_delete_button
+
+            def test_delete_all_buttons(self, driver):
+                add_remove_elements_page = AddRemoveElementsPage(driver)
+                add_remove_elements_page.open(URL.ADD_REMOVE_ELEMENTS)
+                add_remove_elements_page.click_add_button()
+                add_remove_elements_page.delete_all_added_buttons()
+                count_actual_buttons = add_remove_elements_page.actual_count_delete_after_deletion()
+                assert count_actual_buttons == 0
