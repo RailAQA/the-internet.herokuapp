@@ -25,5 +25,7 @@ class Settings:
     #Логин и пароль
     USER_LOGIN = 'admin'
     USER_PASSWORD = USER_LOGIN
+    USER_EMPTY_LOGIN = ''
+    USER_EMPTY_PASSWORD = ''
 
 settings = Settings()

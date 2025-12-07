@@ -164,7 +164,7 @@ class BasePage:
             logger.info('Аллерт есть на странице')
             return True
         except NoAlertPresentException:
-            #ogger.critical('Аллерт не найден')
+            logger.critical('Аллерт не найден')
             return False
             
 
