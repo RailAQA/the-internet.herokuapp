@@ -87,6 +87,16 @@ class BasePage:
             raise AssertionError(f'элемент с локатором {args} не появился в течение {timeout}')
         except TimeoutException:
             raise AssertionError(f'элемент с локатором {args} не появился в течение {timeout}')
+        
+    def image_is_broken(self, locator: tuple):
+        """
+        Чекер на битую картинку через Javascript
+        """
+        script = """
+        var img = arguments[0];
+        return img.naturalWidth === 0 || img.complete === false;
+        """
+        return self.driver.execute_script(script, self.find(locator))
 
     @allure.step('Ожидание пока элемент станет НЕвидимым')
     def wait_element_will_invisible(self, timeout: int, args):

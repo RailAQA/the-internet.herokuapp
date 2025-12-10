@@ -12,3 +12,6 @@ def generated_count_clicks_to_add_button():
 
 def generated_auth_form():
     yield AuthForm(login=faker_en.name_male(), password=faker_en.name_male())
+
+def generated_random_broken_image():
+    return random.randint(1, 3)
