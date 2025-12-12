@@ -85,6 +85,8 @@ class TestBasicAuthPage:
         @allure.feature('Модуль text в BasicAuthPage')
         class TestRegressionCongralutationsAuthModule:
 
+            @allure.title('Проверка h1 заголовка на странице BasicAuthPage')
+            @allure.description('Заголовок = Basic Auth')
             def test_title_congrat_module(self, driver):
                 basic_auth_page = BasicAuthPage(driver)
                 basic_auth_page.open(URL.BASIC_AUTH)
@@ -93,6 +95,8 @@ class TestBasicAuthPage:
                 expected_title = basic_auth_page.get_expected_tittle()
                 assert actual_title == expected_title
 
+            @allure.title('Проверка описания на странице BasicAuthPage')
+            @allure.description('Текст = Congratulations! You must have the proper credentials.')
             def test_decription_congrat_module(self, driver):
                 basic_auth_page = BasicAuthPage(driver)
                 basic_auth_page.open(URL.BASIC_AUTH)

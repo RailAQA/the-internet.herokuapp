@@ -1,4 +1,5 @@
 from data.data import AuthForm
+from locators.checkboxes_page_locators import CheckboxesPageLocators
 from faker import Faker
 import random
 import os
@@ -15,3 +16,7 @@ def generated_auth_form():
 
 def generated_random_broken_image():
     return random.randint(1, 3)
+
+def generated_random_checkbox():
+    LIST_CHECKBOXES = CheckboxesPageLocators.LIST_CHECKBOX
+    return random.choice(LIST_CHECKBOXES)

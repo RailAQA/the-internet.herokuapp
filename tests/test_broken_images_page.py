@@ -41,8 +41,15 @@ class TestBrokenImagesPage:
                 Регресс тесты на модуль image.
                 """
 
+                @allure.title('Проверка 2 картинки битые на странице BrokenImagesPage')
                 @pytest.mark.parametrize("broken_image", BrokenImagesPageLocators.BROKEN_IMAGES_LIST)
                 def test_broken_image(self, driver, broken_image):
                     broken_images_page = BrokenImagesPage(driver)
                     broken_images_page.open(URL.BROKEN_IMAGES)
                     assert broken_images_page.image_is_broken(broken_image)
+
+                @allure.title('Проверка валидная картинка не битая на странице BrokenImagesPage')
+                def test_valid_image(self, driver):
+                    broken_images_page = BrokenImagesPage(driver)
+                    broken_images_page.open(URL.BROKEN_IMAGES)
+                    assert not broken_images_page.image_is_broken(BrokenImagesPageLocators.IMAGE)
