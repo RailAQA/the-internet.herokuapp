@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from utils.logging import *
 from config.settings import settings
@@ -12,6 +13,7 @@ import allure
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
+        self.action = ActionChains(driver)
 
     @allure.step(f'Запуск бразуера и открытие страницы')
     def open(self, url):
@@ -174,7 +176,7 @@ class BasePage:
             logger.info('Аллерт есть на странице')
             return True
         except NoAlertPresentException:
-            logger.critical('Аллерт не найден')
+            logger.info('Аллерт не найден')
             return False
             
 
@@ -200,3 +202,11 @@ class BasePage:
     @allure.step('Скиппнуть аллерт')
     def alert_close(self):
         self.driver.switch_to.alert.dismiss()
+
+    def action_right_click(self, args):
+        element = self.find(args)
+        self.action.context_click(element).perform()
+    
+    def action_left_click(self, args):
+        element = self.find(args)
+        self.action.click(element).perform()

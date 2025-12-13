@@ -23,3 +23,40 @@ class TestContextMenuPage:
             context_menu_page = ContextMenuPage(driver)
             context_menu_page.open(URL.CONTEXT_MENU)
             assert context_menu_page.is_page_loaded(URL.CONTEXT_MENU)
+
+    @allure.suite('Регресс тесты ContextMenuPage')
+    @pytest.mark.regression
+    @pytest.mark.regression_context_menu_page
+    class TestRegressContextMenuPage:
+        """
+        Регрессионные тесты для страницы ContextMenuPage
+        """
+        
+        @pytest.mark.regression_module_context_manu_page
+        @allure.severity(allure.severity_level.CRITICAL)
+        @allure.feature('Модуль BOX в ContextMenuPage')
+        class TestRegressionBoxModule:
+            """
+            Регресс тесты на модуль BOX.
+            """
+
+            @allure.title('Проверка появляется алерт по правому клику на бокс')
+            def test_alert_after_right_click(self, driver):
+                context_menu_page = ContextMenuPage(driver)
+                context_menu_page.open(URL.CONTEXT_MENU)
+                context_menu_page.right_click_on_box()
+                assert context_menu_page.is_alert_present()
+
+            @allure.title('Проверка не появляется алерт по правому клику на любое пустое место')
+            def test_right_click_on_empty_space(self, driver):
+                context_menu_page = ContextMenuPage(driver)
+                context_menu_page.open(URL.CONTEXT_MENU)
+                context_menu_page.right_click_on_empty_space()
+                assert not context_menu_page.is_alert_present()
+
+            @allure.title('Проверка не появляется алерт по левому клику на бокс')
+            def test_right_click_on_box(self, driver):
+                context_menu_page = ContextMenuPage(driver)
+                context_menu_page.open(URL.CONTEXT_MENU)
+                context_menu_page.left_click_on_box()
+                assert not context_menu_page.is_alert_present()
