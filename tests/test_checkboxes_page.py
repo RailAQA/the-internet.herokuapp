@@ -45,7 +45,7 @@ class TestCheckboxesPage:
                 checkboxes_page = CheckboxesPage(driver)
                 checkboxes_page.open(URL.CHECKBOXES)
                 checkboxes_are_not_active = checkboxes_page.check_checkboxes_not_active()
-                assert checkboxes_are_not_active
+                assert checkboxes_are_not_active, f'Один из чекбоксов активен по умолчанию'
 
             @allure.title('Проверка по клику на чекбокс становится активным')
             def test_checkbox_activation(self, driver):
@@ -53,7 +53,7 @@ class TestCheckboxesPage:
                 checkboxes_page.open(URL.CHECKBOXES)
                 checkboxes_page.click_to_checkbox()
                 checkbox_is_active = checkboxes_page.checkbox_is_active()
-                assert checkbox_is_active
+                assert checkbox_is_active, f'По клику на чекбокс не становится активным'
 
             @allure.title('Проверка по повторному клику на чекбокс становится НЕ активным')
             def test_checkbox_disable(self, driver):
@@ -62,4 +62,4 @@ class TestCheckboxesPage:
                 checkboxes_page.click_to_checkbox()
                 checkboxes_page.disable_checkbox()
                 checkbox_is_disabled = checkboxes_page.check_checkboxes_not_active()
-                assert checkbox_is_disabled
+                assert checkbox_is_disabled, f'По клику активный чекбокс не задизейблился'

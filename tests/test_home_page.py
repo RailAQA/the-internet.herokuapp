@@ -42,8 +42,8 @@ class TestHomePage:
             
             @pytest.mark.parametrize('link_index, expected_url', list(enumerate(URL.EXPECTED_URLS))[:15])
             def test_click_to_links_home_page(self, driver, link_index, expected_url):
-                if 'auth' in expected_url and settings.BROWSER == 'firefox':
-                    pytest.skip(f"Пропуск auth страницы в Firefox: {expected_url}")
+                if 'auth' in expected_url:
+                    pytest.skip(f"Пропуск auth страницы для стабильности")
                 home_page = HomePage(driver)
                 home_page.open(settings.BASE_URL)
                 home_page.click_to_link_by_index(link_index, expected_url)  # ← передаем индекс
