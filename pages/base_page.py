@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from utils.logging import *
 from config.settings import settings
 from selenium.common.exceptions import (NoSuchElementException, NoAlertPresentException, TimeoutException)
+from selenium.webdriver.support.ui import Select
 import requests
 import allure
 
@@ -203,16 +204,29 @@ class BasePage:
     def alert_close(self):
         self.driver.switch_to.alert.dismiss()
 
+    @allure.step('Клик провой кнопкой мыши через ActionChain')
     def action_right_click(self, args):
         element = self.find(args)
         self.action.context_click(element).perform()
     
+    @allure.step('Клик левой кнопкой мыши через ActionChain')
     def action_left_click(self, args):
         element = self.find(args)
         self.action.click(element).perform()
 
+    @allure.step('Обновление страницы')
     def refresh_page(self):
         """
         Обновление текущей страницы
         """
         self.driver.refresh()
+
+    def drag_and_drop(self, element_1, element_2):
+        self.action.drag_and_drop(element_1, element_2).perform()
+
+    def drag_and_drop_by_offset(self, element_1, x, y):
+        self.action.drag_and_drop_by_offset(element_1, x, y).perform()
+
+    def dropdown(self, locator):
+        select = Select(locator)
+        return select

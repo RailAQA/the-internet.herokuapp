@@ -20,3 +20,7 @@ def generated_random_broken_image():
 def generated_random_checkbox():
     LIST_CHECKBOXES = CheckboxesPageLocators.LIST_CHECKBOX
     return random.choice(LIST_CHECKBOXES)
+
+def generated_random_dropdown_value():
+    #value = ['Option 1', 'Option 2']
+    return str(random.randint(1, 2))
