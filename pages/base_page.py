@@ -210,3 +210,9 @@ class BasePage:
     def action_left_click(self, args):
         element = self.find(args)
         self.action.click(element).perform()
+
+    def refresh_page(self):
+        """
+        Обновление текущей страницы
+        """
+        self.driver.refresh()
