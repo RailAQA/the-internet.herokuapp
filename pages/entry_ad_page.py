@@ -4,5 +4,4 @@ entry_ad_page_locators = EntryAdPageLocators()
 
 
 class EntryAdPage(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
+    pass
